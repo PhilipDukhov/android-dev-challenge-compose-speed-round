@@ -54,6 +54,7 @@ fun HomeScreen(
             ProjectTextField(
                 placeholder = "Search",
                 textColor = Color.Black.copy(alpha = 0.8f),
+                leadingIcon = R.drawable.ic_baseline_search_24,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
