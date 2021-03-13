@@ -16,30 +16,36 @@
 package com.example.androiddevchallenge.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
+import com.example.androiddevchallenge.ui.general.LocalSysUiController
 
 private val DarkColorPalette = darkColors(
-    primary = purple200,
-    primaryVariant = purple700,
-    secondary = teal200
+    primary = white,
+    secondary = rust300,
+    background = gray900,
+    surface = white150,
+    onPrimary = gray900,
+    onSecondary = gray900,
+    onBackground = taupe100,
+    onSurface = white800,
 )
 
 private val LightColorPalette = lightColors(
-    primary = purple500,
-    primaryVariant = purple700,
-    secondary = teal200
-
-        /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    primary = gray900,
+    secondary = rust600,
+    background = taupe100,
+    surface = white850,
+    onPrimary = white,
+    onSecondary = white,
+    onBackground = taupe800,
+    onSurface = gray800,
 )
 
 @Composable
@@ -49,6 +55,12 @@ fun MyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() (
     } else {
         LightColorPalette
     }
+    val sysUiController = LocalSysUiController.current
+    SideEffect {
+        sysUiController.setSystemBarsColor(
+            color = colors.background
+        )
+    }
 
     MaterialTheme(
         colors = colors,
@@ -57,3 +69,27 @@ fun MyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() (
         content = content
     )
 }
+
+@Composable
+fun TextFieldDefaults.customTextFieldColors(textColor: Color) =
+    outlinedTextFieldColors(
+        textColor = textColor,
+        backgroundColor = MaterialTheme.colors.surface,
+        cursorColor = MaterialTheme.colors.onSurface,
+        errorCursorColor = MaterialTheme.colors.error,
+        focusedBorderColor =
+        MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.high),
+        unfocusedBorderColor =
+        MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.disabled),
+        errorBorderColor = MaterialTheme.colors.error,
+        leadingIconColor =
+        MaterialTheme.colors.onSurface.copy(alpha = IconOpacity),
+        trailingIconColor =
+        MaterialTheme.colors.onSurface.copy(alpha = IconOpacity),
+        errorTrailingIconColor = MaterialTheme.colors.error,
+        focusedLabelColor =
+        MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.high),
+        unfocusedLabelColor = MaterialTheme.colors.onSurface.copy(ContentAlpha.medium),
+        errorLabelColor = MaterialTheme.colors.error,
+        placeholderColor = MaterialTheme.colors.onSurface.copy(ContentAlpha.medium),
+    )
